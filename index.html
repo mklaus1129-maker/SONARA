@@ -72,11 +72,26 @@ function renderLibrary() {
       if (saveTracks()) renderLibrary();
     };
 
-    content.append(name, details, remove);
+    content.append(name, details);
 
-    item.append(cover, content);
-    library.append(item);
-  });
+const open = document.createElement('button');
+open.textContent = 'Открыть';
+open.style.cssText =
+  'margin-top:8px;margin-right:8px;padding:6px 10px;border:0;border-radius:8px;background:#514078;color:white;';
+
+open.onclick = () => {
+  alert(
+    'Название: ' + track.title +
+    '\n\nТекст песни:\n' +
+    (track.lyrics || 'Текст не добавлен.')
+  );
+};
+
+content.append(open, remove);
+
+item.append(cover, content);
+library.append(item);
+});
 }
 
 document.getElementById('create').onclick = () => {
