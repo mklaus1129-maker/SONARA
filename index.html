@@ -110,7 +110,23 @@ edit.onclick = () => {
 };
 
 content.append(open, edit, remove);
+const download = document.createElement('button');
+download.textContent = 'Скачать текст';
+download.style.cssText =
+  'margin-top:8px;margin-right:8px;padding:6px 10px;border:0;border-radius:8px;background:#28634d;color:white;';
 
+download.onclick = () => {
+  const text = 'Название: ' + track.title + '\n\n' + (track.lyrics || 'Текст не добавлен.');
+  const file = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(file);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = track.title + '.txt';
+  link.click();
+  URL.revokeObjectURL(url);
+};
+
+content.append(download);
 item.append(cover, content);
 library.append(item);
 });
