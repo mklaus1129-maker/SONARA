@@ -87,7 +87,29 @@ open.onclick = () => {
   );
 };
 
-content.append(open, remove);
+const edit = document.createElement('button');
+edit.textContent = 'Редактировать';
+edit.style.cssText =
+  'margin-top:8px;margin-right:8px;padding:6px 10px;border:0;border-radius:8px;background:#315b68;color:white;';
+
+edit.onclick = () => {
+  const newTitle = prompt('Измени название песни:', track.title);
+  if (newTitle === null) return;
+
+  const newLyrics = prompt('Измени текст песни:', track.lyrics || '');
+  if (newLyrics === null) return;
+
+  track.title = newTitle.trim() || track.title;
+  track.lyrics = newLyrics;
+
+  if (saveTracks()) {
+    renderLibrary();
+    notice.style.display = 'block';
+    notice.textContent = 'Изменения сохранены!';
+  }
+};
+
+content.append(open, edit, remove);
 
 item.append(cover, content);
 library.append(item);
