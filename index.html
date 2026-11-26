@@ -127,6 +127,38 @@ download.onclick = () => {
 };
 
 content.append(download);
+const pdf = document.createElement('button');
+pdf.textContent = 'Скачать PDF';
+pdf.style.cssText =
+  'margin-top:8px;padding:6px 10px;border:0;border-radius:8px;background:#704b91;color:white;';
+
+pdf.onclick = () => {
+  const page = window.open('', '_blank');
+
+  if (!page) {
+    alert('Разреши открытие всплывающих окон.');
+    return;
+  }
+
+  page.document.title = track.title;
+
+  const style = page.document.createElement('style');
+  style.textContent =
+    'body{font-family:Arial,sans-serif;padding:30px;line-height:1.6;} h1{color:#513b75;} pre{white-space:pre-wrap;font-family:Arial,sans-serif;}';
+
+  const heading = page.document.createElement('h1');
+  heading.textContent = track.title;
+
+  const text = page.document.createElement('pre');
+  text.textContent = track.lyrics || 'Текст не добавлен.';
+
+  page.document.head.append(style);
+  page.document.body.append(heading, text);
+
+  setTimeout(() => page.print(), 300);
+};
+
+content.append(pdf);    
 item.append(cover, content);
 library.append(item);
 });
